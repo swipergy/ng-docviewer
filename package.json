@@ -1,0 +1,57 @@
+{
+  "name": "ng-docviewer",
+  "version": "1.0.0",
+  "author": "Swipergy GmbH <info@swipergy.com>",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve demo",
+    "build": "npm run build:lib && ng build demo",
+    "build:lib": "ng build @swipergy/ng-docviewer && node scripts/copy-package-files.mjs",
+    "watch": "ng build @swipergy/ng-docviewer --watch --configuration development",
+    "test": "ng test @swipergy/ng-docviewer --watch=false",
+    "e2e": "playwright test",
+    "lint": "ng lint",
+    "fixtures": "node scripts/generate-fixtures.mjs",
+    "check": "npm run lint && npm test && npm run build && npm run e2e"
+  },
+  "private": true,
+  "packageManager": "npm@11.16.0",
+  "dependencies": {
+    "@angular/common": "^22.2.0",
+    "@angular/compiler": "^22.2.0",
+    "@angular/core": "^22.2.0",
+    "@angular/forms": "^22.2.0",
+    "@angular/platform-browser": "^22.2.0",
+    "@angular/router": "^22.2.0",
+    "@jvmr/pptx-to-html": "^1.1.2",
+    "docx-preview": "^0.4.1",
+    "dompurify": "^3.4.17",
+    "jszip": "^3.10.2",
+    "modern-screenshot": "^4.7.0",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.4.299",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.2.4",
+    "@angular/cli": "^22.2.4",
+    "@angular/compiler-cli": "^22.2.0",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "1.64",
+    "@vitest/browser-playwright": "^5.0.5",
+    "angular-eslint": "22.6.0",
+    "docx": "^9.14.0",
+    "eslint": "^10.12.0",
+    "jsdom": "^30.0.0",
+    "ng-packagr": "^22.2.0",
+    "pptxgenjs": "^4.0.1",
+    "prettier": "^3.8.1",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "8.71.0",
+    "vitest": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

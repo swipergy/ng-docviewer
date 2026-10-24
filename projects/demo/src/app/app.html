@@ -1,0 +1,53 @@
+<aside class="panel">
+  <h1>Document Viewer</h1>
+
+  <section>
+    <h2>Beispiele</h2>
+    <div class="samples">
+      @for (s of samples; track s.url) {
+        <button type="button" (click)="open(s)" [class.active]="src() === s.url" [attr.data-sample]="s.label">{{ s.label }}</button>
+      }
+    </div>
+    <label class="file">Eigene Datei <input type="file" (change)="onFile($event)" accept=".pdf,.docx,.pptx,.jpg,.jpeg,.png,.mp3,.wav,.ogg,.m4a" /></label>
+  </section>
+
+  <section>
+    <h2>Wasserzeichen</h2>
+    <label class="check"><input type="checkbox" [(ngModel)]="enabled" name="enabled" /> aktiv</label>
+    <label>Text <textarea rows="2" [(ngModel)]="text" name="text"></textarea></label>
+    <label>&#123;user&#125; <input [(ngModel)]="user" name="user" /></label>
+    <label class="check"><input type="checkbox" [(ngModel)]="withLogo" name="logo" /> Logo</label>
+    <label>Deckkraft {{ opacity() }} <input type="range" min="0.05" max="0.6" step="0.01" [(ngModel)]="opacity" name="opacity" /></label>
+    <label>Winkel {{ angle() }}° <input type="range" min="-90" max="90" step="1" [(ngModel)]="angle" name="angle" /></label>
+    <label
+      >Layout
+      <select [(ngModel)]="layout" name="layout">
+        <option value="tile">gekachelt</option>
+        <option value="center">mittig</option>
+      </select>
+    </label>
+    <label class="check"><input type="checkbox" [(ngModel)]="protect" name="protect" /> Manipulationsschutz</label>
+  </section>
+
+  <section>
+    <h2>Ereignisse</h2>
+    <ol class="log" data-testid="log">
+      @for (line of log(); track $index) {
+        <li>{{ line }}</li>
+      }
+    </ol>
+  </section>
+</aside>
+
+<main>
+  <sy-doc-viewer
+    [src]="src()"
+    [fileName]="fileName()"
+    [watermark]="watermark()"
+    [watermarkContext]="context()"
+    [protect]="protect()"
+    (loaded)="onLoaded($event)"
+    (viewerError)="onError($event)"
+    (tamper)="onTamper($event)"
+  />
+</main>

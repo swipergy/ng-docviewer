@@ -1,0 +1,91 @@
+@if (toolbar()) {
+  <div class="sy-toolbar" role="toolbar" [attr.aria-label]="displayName()">
+    <span class="sy-title" [title]="displayName()">{{ displayName() }}</span>
+
+    @if (pageCount() > 1) {
+      <div class="sy-group">
+        <button type="button" class="sy-btn" (click)="previousPage()" [disabled]="currentPage() <= 1" [attr.aria-label]="labels.previousPage" [title]="labels.previousPage">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4-4.6-4.6z" /></svg>
+        </button>
+        <label class="sy-page-indicator">
+          <span class="sy-sr-only">{{ labels.page }}</span>
+          <input type="number" min="1" [max]="pageCount()" [value]="currentPage()" (change)="onPageInput($event)" />
+          <span>/ {{ pageCount() }}</span>
+        </label>
+        <button type="button" class="sy-btn" (click)="nextPage()" [disabled]="currentPage() >= pageCount()" [attr.aria-label]="labels.nextPage" [title]="labels.nextPage">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6 8.6 7.4l4.6 4.6-4.6 4.6L10 18l6-6z" /></svg>
+        </button>
+      </div>
+    }
+
+    @if (status() === 'ready' && kind() !== 'audio') {
+      <div class="sy-group">
+        <button type="button" class="sy-btn" (click)="zoomOut()" [attr.aria-label]="labels.zoomOut" [title]="labels.zoomOut">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13H5v-2h14z" /></svg>
+        </button>
+        <span class="sy-zoom" aria-live="polite">{{ zoomPercent() }} %</span>
+        <button type="button" class="sy-btn" (click)="zoomIn()" [attr.aria-label]="labels.zoomIn" [title]="labels.zoomIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" /></svg>
+        </button>
+        <button type="button" class="sy-btn" (click)="fitToWidth()" [class.sy-active]="fitWidth()" [attr.aria-pressed]="fitWidth()" [attr.aria-label]="labels.fitWidth" [title]="labels.fitWidth">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5v14h2V5zm16 0v14h2V5zM7 11h4V8l4 4-4 4v-3H7z" /></svg>
+        </button>
+        @if (canRotate()) {
+          <button type="button" class="sy-btn" (click)="rotate()" [attr.aria-label]="labels.rotate" [title]="labels.rotate">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z" /></svg>
+          </button>
+        }
+      </div>
+    }
+
+    <div class="sy-group sy-end">
+      <button type="button" class="sy-btn" (click)="toggleFullscreen()" [attr.aria-label]="labels.fullscreen" [title]="labels.fullscreen">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z" /></svg>
+      </button>
+      @if (allowPrint() && kind() !== 'audio') {
+        <button type="button" class="sy-btn" (click)="print()" [disabled]="!canPrint()" [attr.aria-label]="labels.print" [title]="labels.print">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 8H5a3 3 0 0 0-3 3v6h4v4h12v-4h4v-6a3 3 0 0 0-3-3zm-3 11H8v-5h8zm3-7a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm-1-9H6v4h12z" /></svg>
+        </button>
+      }
+      @if (allowDownload()) {
+        <button type="button" class="sy-btn" (click)="download()" [disabled]="!canDownload()"
+          [attr.aria-label]="audioDownloadBlocked() ? labels.audioDownloadDisabled : labels.download"
+          [title]="audioDownloadBlocked() ? labels.audioDownloadDisabled : labels.download">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 9h-4V3H9v6H5l7 7zM5 18v2h14v-2z" /></svg>
+        </button>
+      }
+      @if (offerPdf()) {
+        <button type="button" class="sy-btn" (click)="downloadPdf()" [disabled]="!canDownloadPdf()" [attr.aria-busy]="busy()"
+          [attr.aria-label]="labels.downloadPdf" [title]="labels.downloadPdf">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm4 18H6V4h7v5h5zM8.5 13H10a1.5 1.5 0 0 1 0 3h-.5v1.5h-1zm1 2h.5a.5.5 0 0 0 0-1h-.5zm2.5-2h1.25A1.75 1.75 0 0 1 15 14.75v1A1.75 1.75 0 0 1 13.25 17.5H12zm1 1v2.5h.25a.75.75 0 0 0 .75-.75v-1a.75.75 0 0 0-.75-.75z" /></svg>
+        </button>
+      }
+    </div>
+  </div>
+}
+
+<div class="sy-viewport">
+  <!-- Stage enthält nur den Scrollbereich und die Wasserzeichen-Ebene (wird von WatermarkOverlay verwaltet). -->
+  <div class="sy-stage" #stage>
+    <div class="sy-scroll" #scroll tabindex="0" (scroll)="onScroll()"></div>
+  </div>
+
+  @switch (status()) {
+    @case ('loading') {
+      <div class="sy-status" role="status"><span class="sy-spinner" aria-hidden="true"></span>{{ labels.loading }}</div>
+    }
+    @case ('error') {
+      <div class="sy-status sy-status-error" role="alert">
+        <strong>{{ labels.error }}</strong>
+        <span>{{ errorMessage() }}</span>
+      </div>
+    }
+    @case ('locked') {
+      <div class="sy-status sy-status-error" role="alert">{{ labels.tampered }}</div>
+    }
+  }
+</div>
+
+@if (protect()) {
+  <div class="sy-print-blocked">{{ labels.printBlocked }}</div>
+}

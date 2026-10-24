@@ -1,0 +1,52 @@
+{
+  "name": "@swipergy/ng-docviewer",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "@angular/common": "^22.2.0",
+    "@angular/core": "^22.2.0",
+    "pdfjs-dist": "^6.4.299"
+  },
+  "dependencies": {
+    "@jvmr/pptx-to-html": "^1.1.2",
+    "docx-preview": "^0.4.1",
+    "dompurify": "^3.4.17",
+    "jszip": "^3.10.2",
+    "modern-screenshot": "^4.7.0",
+    "pdf-lib": "^1.17.1",
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false,
+  "description": "Angular document viewer for PDF, Word (DOCX), PowerPoint (PPTX), images and audio with tamper-resistant custom watermarks.",
+  "keywords": [
+    "angular",
+    "angular-component",
+    "dlp",
+    "document-viewer",
+    "docx",
+    "docx-viewer",
+    "pdf",
+    "pdf-export",
+    "pdf-viewer",
+    "powerpoint",
+    "pptx",
+    "pptx-viewer",
+    "viewer",
+    "watermark",
+    "word"
+  ],
+  "author": "Swipergy GmbH <info@swipergy.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/swipergy/ng-docviewer#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swipergy/ng-docviewer.git",
+    "directory": "projects/ng-docviewer"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "bugs": {
+    "url": "https://github.com/swipergy/ng-docviewer/issues"
+  }
+}

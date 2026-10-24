@@ -1,0 +1,247 @@
+:host {
+  --sy-viewer-bg: #e5e7eb;
+  --sy-toolbar-bg: #fff;
+  --sy-toolbar-fg: #1f2937;
+  --sy-toolbar-border: #d1d5db;
+  --sy-accent: #2563eb;
+  --sy-error: #b91c1c;
+  --sy-page-gap: 16px;
+  --sy-page-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 300px;
+  height: 100%;
+  background: var(--sy-viewer-bg);
+  color: var(--sy-toolbar-fg);
+  font: 14px/1.4 system-ui, sans-serif;
+  overflow: hidden;
+}
+
+:host(.sy-protected) {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.sy-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 4px 8px;
+  background: var(--sy-toolbar-bg);
+  border-bottom: 1px solid var(--sy-toolbar-border);
+  flex: none;
+}
+
+.sy-title {
+  font-weight: 600;
+  min-width: 0;
+  max-width: 30ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sy-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.sy-end {
+  margin-left: auto;
+}
+
+.sy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.sy-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.sy-btn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.sy-btn:focus-visible {
+  outline: 2px solid var(--sy-accent);
+  outline-offset: 1px;
+}
+
+.sy-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.sy-btn.sy-active {
+  color: var(--sy-accent);
+}
+
+.sy-page-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sy-page-indicator input {
+  width: 3.5em;
+  padding: 2px 4px;
+  border: 1px solid var(--sy-toolbar-border);
+  border-radius: 4px;
+  font: inherit;
+  text-align: right;
+}
+
+.sy-zoom {
+  min-width: 4.5em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.sy-viewport {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.sy-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.sy-scroll {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+  padding: var(--sy-page-gap) 16px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.sy-scroll ::ng-deep .sy-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sy-page-gap);
+  min-width: min-content;
+}
+
+.sy-scroll ::ng-deep .sy-pdf-page {
+  background: #fff;
+  box-shadow: var(--sy-page-shadow);
+  flex: none;
+}
+
+.sy-scroll ::ng-deep .sy-pdf-page canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sy-scroll ::ng-deep .sy-image-page {
+  flex: none;
+}
+
+.sy-scroll ::ng-deep .sy-audio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: min(480px, 100%);
+  margin-top: 10vh;
+  padding: 24px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: var(--sy-page-shadow);
+  box-sizing: border-box;
+}
+
+.sy-scroll ::ng-deep .sy-audio-icon {
+  color: var(--sy-accent);
+}
+
+.sy-scroll ::ng-deep .sy-audio-title {
+  font-weight: 600;
+  text-align: center;
+  word-break: break-word;
+}
+
+.sy-scroll ::ng-deep .sy-audio audio {
+  width: 100%;
+}
+
+.sy-status {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+  background: var(--sy-viewer-bg);
+}
+
+.sy-status-error {
+  color: var(--sy-error);
+}
+
+.sy-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--sy-toolbar-border);
+  border-top-color: var(--sy-accent);
+  border-radius: 50%;
+  animation: sy-spin 0.8s linear infinite;
+}
+
+@keyframes sy-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sy-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.sy-print-blocked {
+  display: none;
+}
+
+@media print {
+  :host(.sy-protected) .sy-toolbar,
+  :host(.sy-protected) .sy-viewport {
+    display: none !important;
+  }
+
+  :host(.sy-protected) .sy-print-blocked {
+    display: block;
+    padding: 24px;
+  }
+}
