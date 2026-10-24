@@ -16,6 +16,7 @@ Thanks for helping to improve `@swipergy/ng-docviewer`! Bug reports, sample docu
 npm ci
 npm start          # demo app on http://localhost:4200 with sample files of every format
 npm run fixtures   # regenerate the sample files (needs ffmpeg + macOS `say`)
+npm run build:demo # static demo site in dist/demo/browser, uploadable to any webspace folder
 ```
 
 ## Project layout

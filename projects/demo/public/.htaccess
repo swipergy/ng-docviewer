@@ -1,0 +1,10 @@
+# Apache webspace: pdf.js loads its worker as an ES module, which browsers only accept
+# with a JavaScript MIME type. Many hosts don't know the .mjs extension yet.
+AddType text/javascript .mjs
+
+# Replace a stricter site-wide CSP for this folder: audio is played from blob: URLs.
+<IfModule mod_headers.c>
+  Header unset Content-Security-Policy
+  Header always unset Content-Security-Policy
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob:; font-src 'self' data: blob:; connect-src 'self'"
+</IfModule>

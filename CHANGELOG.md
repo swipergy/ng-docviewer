@@ -5,6 +5,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-24
+
+### Added
+
+- Demo site (`npm run build:demo`): a static build in `dist/demo/browser` that runs from any folder on a webspace, in English and German.
+
+### Fixed
+
+- JPG/PNG failed with “The source image cannot be decoded” on sites whose Content Security Policy blocks `blob:` images. Images are now shown and printed from `data:` URLs, so `img-src 'self' data:` is enough.
+- The npm badge in the README showed a stale version on GitHub.
+
 ## [1.0.0] - 2026-10-24
 
 Initial release.
@@ -32,5 +43,6 @@ Initial release.
 - Office HTML is sanitized with DOMPurify and isolated in a shadow root. External resources (images, stylesheets, `@import`, `url()`) are blocked, so opening a document never contacts third-party servers.
 - PDFs are rendered without a text layer.
 
-[Unreleased]: https://github.com/swipergy/ng-docviewer/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/swipergy/ng-docviewer/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/swipergy/ng-docviewer/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/swipergy/ng-docviewer/releases/tag/v1.0.0

@@ -5,7 +5,7 @@ import { PDFDocument, PDFName, PDFDict } from 'pdf-lib';
 import { openSample } from './helpers';
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/?lang=de');
 });
 
 async function download(page: Page): Promise<{ name: string; data: Buffer; path: string }> {
@@ -104,7 +104,7 @@ test('Drucken erzeugt Druckansicht mit Wasserzeichen', async ({ page }) => {
       }
     }).observe(document, { childList: true, subtree: true });
   });
-  await page.goto('/');
+  await page.goto('/?lang=de');
   for (const [name, expected] of [
     ['PDF', { pages: 3, imgs: 3, wm: 0 }],
     ['Word', { pages: 2, wm: 2 }],

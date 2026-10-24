@@ -5,7 +5,7 @@ test.beforeEach(async ({ page }) => {
   page.on('pageerror', (e) => {
     throw e;
   });
-  await page.goto('/');
+  await page.goto('/?lang=de');
 });
 
 for (const name of Object.keys(SAMPLES) as SampleName[]) {
@@ -93,7 +93,7 @@ test('Kontextmenü und Strg+S/Strg+P werden abgefangen', async ({ page }) => {
       }
     }).observe(document, { childList: true, subtree: true });
   });
-  await page.goto('/');
+  await page.goto('/?lang=de');
   await openSample(page, 'JPG');
   const press = (key: string) =>
     page.evaluate((k) => {

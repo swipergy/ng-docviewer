@@ -1,27 +1,190 @@
 :host {
+  --accent: #2563eb;
+  --border: #e2e5ea;
+  --muted: #5b6472;
+  --surface: #f7f8fa;
+
+  display: block;
+  font: 15px/1.5 system-ui, sans-serif;
+  color: #1c2128;
+}
+
+.header {
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+}
+
+.header-inner,
+.hero,
+.playground,
+.footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 56px;
+}
+
+.logo {
+  font-size: 19px;
+  font-weight: 700;
+
+  span {
+    color: var(--accent);
+  }
+}
+
+.version {
+  padding: 1px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto;
+
+  a {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover,
+    &.active {
+      color: #1c2128;
+    }
+  }
+}
+
+.lang {
+  display: flex;
+  gap: 8px;
+  padding-left: 18px;
+  border-left: 1px solid var(--border);
+
+  a.active {
+    color: var(--accent);
+  }
+}
+
+.hero {
+  padding-top: 56px;
+  padding-bottom: 40px;
+  text-align: center;
+
+  h1 {
+    font-size: 40px;
+    line-height: 1.15;
+    margin: 0 0 12px;
+  }
+}
+
+.lead {
+  max-width: 720px;
+  margin: 0 auto 28px;
+  font-size: 17px;
+  color: var(--muted);
+}
+
+.install {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 100%;
+  padding: 8px 8px 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+
+  code {
+    font: 14px ui-monospace, SFMono-Regular, Menlo, monospace;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+.install-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+  text-align: left;
+}
+
+.feature {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  h3 {
+    margin: 0 0 6px;
+    font-size: 16px;
+  }
+
+  p {
+    margin: 0;
+    color: var(--muted);
+  }
+}
+
+.playground {
+  padding-bottom: 48px;
+
+  h2 {
+    margin: 0 0 4px;
+    font-size: 24px;
+  }
+}
+
+.hint {
+  margin: 0 0 16px;
+  color: var(--muted);
+}
+
+.workbench {
   display: grid;
   grid-template-columns: 300px 1fr;
-  height: 100vh;
-  font: 14px/1.4 system-ui, sans-serif;
+  height: 80vh;
+  min-height: 520px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .panel {
   padding: 16px;
   overflow: auto;
-  border-right: 1px solid #ddd;
-  background: #fafafa;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 14px;
 }
 
-h1 {
-  font-size: 18px;
-  margin: 0 0 12px;
-}
-
-h2 {
-  font-size: 13px;
-  text-transform: uppercase;
-  color: #555;
+h4 {
   margin: 16px 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--muted);
+
+  section:first-child > & {
+    margin-top: 0;
+  }
 }
 
 .samples {
@@ -32,15 +195,20 @@ h2 {
 
 button {
   padding: 4px 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ccd1d9;
   border-radius: 6px;
   background: #fff;
+  font: inherit;
   cursor: pointer;
+
+  &:hover {
+    border-color: var(--accent);
+  }
 }
 
 button.active {
-  border-color: #2563eb;
-  color: #2563eb;
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 label {
@@ -66,15 +234,51 @@ label.check {
   color: #444;
 }
 
-main {
+.stage {
   min-width: 0;
   min-height: 0;
 }
 
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--muted);
+
+  nav {
+    display: flex;
+    gap: 24px;
+  }
+
+  a {
+    color: var(--muted);
+    text-decoration: none;
+
+    &:hover {
+      color: #1c2128;
+      text-decoration: underline;
+    }
+  }
+}
+
 @media (max-width: 800px) {
-  :host {
+  .hero h1 {
+    font-size: 30px;
+  }
+
+  .workbench {
     grid-template-columns: 1fr;
     grid-template-rows: auto 70vh;
     height: auto;
+  }
+
+  .panel {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
   }
 }

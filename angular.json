@@ -88,6 +88,10 @@
                 "input": "projects/demo/public"
               },
               {
+                "glob": ".htaccess",
+                "input": "projects/demo/public"
+              },
+              {
                 "glob": "pdf.worker.min.mjs",
                 "input": "node_modules/pdfjs-dist/build",
                 "output": "/"
@@ -98,6 +102,11 @@
           },
           "configurations": {
             "production": {
+              "optimization": {
+                "scripts": true,
+                "styles": { "minify": true, "inlineCritical": false },
+                "fonts": true
+              },
               "budgets": [
                 {
                   "type": "initial",

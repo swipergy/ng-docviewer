@@ -1,6 +1,6 @@
 # @swipergy/ng-docviewer
 
-[![npm](https://img.shields.io/npm/v/@swipergy/ng-docviewer.svg)](https://www.npmjs.com/package/@swipergy/ng-docviewer)
+[![npm](https://img.shields.io/npm/v/%40swipergy%2Fng-docviewer?label=npm)](https://www.npmjs.com/package/@swipergy/ng-docviewer)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/swipergy/ng-docviewer/blob/main/LICENSE)
 
 Angular component that displays **PDF, Word (DOCX), PowerPoint (PPTX), JPG, PNG and audio** entirely in the browser and lays a **custom watermark** over it: text with placeholders and/or a logo. The watermark resists tampering in the viewer and is **burned into downloads, print-outs and generated PDFs**.
@@ -286,13 +286,13 @@ The viewer works with a strict CSP:
 ```
 script-src 'self';
 worker-src 'self';
-img-src 'self' data: blob:;
+img-src 'self' data:;
 media-src 'self' blob:;
 font-src 'self' data: blob:;
 style-src 'self' 'unsafe-inline';
 ```
 
-`style-src 'unsafe-inline'` is needed because Word/PowerPoint formatting is converted to inline styles. If documents are loaded by URL, add their origin to `connect-src`.
+`style-src 'unsafe-inline'` is needed because Word/PowerPoint formatting is converted to inline styles. `media-src blob:` is only needed for audio. If documents are loaded by URL, add their origin to `connect-src`.
 
 ## Troubleshooting
 

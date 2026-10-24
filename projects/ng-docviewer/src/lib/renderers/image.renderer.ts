@@ -1,3 +1,4 @@
+import { toDataUrl } from '../core/data-url';
 import { DocRenderer, PrintContent, RenderContext } from '../core/renderer';
 
 /** Zeigt JPG/PNG mit Zoom und Drehung an. */
@@ -5,7 +6,6 @@ export class ImageRenderer implements DocRenderer {
   pages: HTMLElement[] = [];
   contentWidth = 0;
 
-  private url = '';
   private img = new Image();
   private frame = document.createElement('div');
   private zoom = 1;
@@ -14,10 +14,9 @@ export class ImageRenderer implements DocRenderer {
   constructor(private readonly ctx: RenderContext) {}
 
   async render(): Promise<void> {
-    this.url = URL.createObjectURL(new Blob([this.ctx.doc.data], { type: this.ctx.doc.mimeType }));
     this.img.alt = this.ctx.doc.fileName;
     this.img.draggable = false;
-    this.img.src = this.url;
+    this.img.src = await toDataUrl(new Blob([this.ctx.doc.data], { type: this.ctx.doc.mimeType }));
     await this.img.decode();
     this.frame.className = 'sy-page sy-image-page';
     this.frame.style.position = 'relative';
@@ -45,7 +44,7 @@ export class ImageRenderer implements DocRenderer {
   }
 
   destroy(): void {
-    URL.revokeObjectURL(this.url);
+    this.img.removeAttribute('src');
   }
 
   private layout(): void {

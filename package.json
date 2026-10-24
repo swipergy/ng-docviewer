@@ -1,11 +1,12 @@
 {
   "name": "ng-docviewer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Swipergy GmbH <info@swipergy.com>",
   "scripts": {
     "ng": "ng",
     "start": "ng serve demo",
     "build": "npm run build:lib && ng build demo",
+    "build:demo": "ng build demo --base-href ./",
     "build:lib": "ng build @swipergy/ng-docviewer && node scripts/copy-package-files.mjs",
     "watch": "ng build @swipergy/ng-docviewer --watch --configuration development",
     "test": "ng test @swipergy/ng-docviewer --watch=false",

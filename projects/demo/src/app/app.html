@@ -1,53 +1,109 @@
-<aside class="panel">
-  <h1>Document Viewer</h1>
+<header class="header">
+  <div class="header-inner">
+    <span class="logo">ng-<span>docviewer</span></span>
+    <span class="version">v{{ version }}</span>
+    <nav class="header-links">
+      <a href="https://github.com/swipergy/ng-docviewer" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.npmjs.com/package/@swipergy/ng-docviewer" target="_blank" rel="noopener">npm</a>
+      <span class="lang">
+        <a href="?lang=en" [class.active]="lang === 'en'" hreflang="en">EN</a>
+        <a href="?lang=de" [class.active]="lang === 'de'" hreflang="de">DE</a>
+      </span>
+    </nav>
+  </div>
+</header>
 
-  <section>
-    <h2>Beispiele</h2>
-    <div class="samples">
-      @for (s of samples; track s.url) {
-        <button type="button" (click)="open(s)" [class.active]="src() === s.url" [attr.data-sample]="s.label">{{ s.label }}</button>
-      }
-    </div>
-    <label class="file">Eigene Datei <input type="file" (change)="onFile($event)" accept=".pdf,.docx,.pptx,.jpg,.jpeg,.png,.mp3,.wav,.ogg,.m4a" /></label>
-  </section>
+<section class="hero">
+  <h1>{{ t.title }}</h1>
+  <p class="lead">{{ t.lead }}</p>
+  <div class="install">
+    <span class="install-label">{{ t.install }}</span>
+    <code>{{ installCommand }}</code>
+    <button type="button" (click)="copyInstall()">{{ copied() ? t.copied : t.copy }}</button>
+  </div>
+  <div class="features">
+    @for (f of t.features; track f[0]) {
+      <div class="feature">
+        <h3>{{ f[0] }}</h3>
+        <p>{{ f[1] }}</p>
+      </div>
+    }
+  </div>
+</section>
 
-  <section>
-    <h2>Wasserzeichen</h2>
-    <label class="check"><input type="checkbox" [(ngModel)]="enabled" name="enabled" /> aktiv</label>
-    <label>Text <textarea rows="2" [(ngModel)]="text" name="text"></textarea></label>
-    <label>&#123;user&#125; <input [(ngModel)]="user" name="user" /></label>
-    <label class="check"><input type="checkbox" [(ngModel)]="withLogo" name="logo" /> Logo</label>
-    <label>Deckkraft {{ opacity() }} <input type="range" min="0.05" max="0.6" step="0.01" [(ngModel)]="opacity" name="opacity" /></label>
-    <label>Winkel {{ angle() }}° <input type="range" min="-90" max="90" step="1" [(ngModel)]="angle" name="angle" /></label>
-    <label
-      >Layout
-      <select [(ngModel)]="layout" name="layout">
-        <option value="tile">gekachelt</option>
-        <option value="center">mittig</option>
-      </select>
-    </label>
-    <label class="check"><input type="checkbox" [(ngModel)]="protect" name="protect" /> Manipulationsschutz</label>
-  </section>
+<section class="playground">
+  <h2>{{ t.playground }}</h2>
+  <p class="hint">{{ t.playgroundHint }}</p>
 
-  <section>
-    <h2>Ereignisse</h2>
-    <ol class="log" data-testid="log">
-      @for (line of log(); track $index) {
-        <li>{{ line }}</li>
-      }
-    </ol>
-  </section>
-</aside>
+  <div class="workbench">
+    <aside class="panel">
+      <section>
+        <h4>{{ t.samples }}</h4>
+        <div class="samples">
+          @for (s of samples; track s.url) {
+            <button type="button" (click)="open(s)" [class.active]="src() === s.url" [attr.data-sample]="s.label">{{ s.label }}</button>
+          }
+        </div>
+        <label class="file">{{ t.ownFile }} <input type="file" (change)="onFile($event)" accept=".pdf,.docx,.pptx,.jpg,.jpeg,.png,.mp3,.wav,.ogg,.m4a" /></label>
+      </section>
 
-<main>
-  <sy-doc-viewer
-    [src]="src()"
-    [fileName]="fileName()"
-    [watermark]="watermark()"
-    [watermarkContext]="context()"
-    [protect]="protect()"
-    (loaded)="onLoaded($event)"
-    (viewerError)="onError($event)"
-    (tamper)="onTamper($event)"
-  />
-</main>
+      <section>
+        <h4>{{ t.watermark }}</h4>
+        <label class="check"><input type="checkbox" [formField]="settingsForm.enabled" /> {{ t.enabled }}</label>
+        <label>{{ t.text }} <textarea rows="2" [formField]="settingsForm.text"></textarea></label>
+        <label>&#123;user&#125; <input [formField]="settingsForm.user" /></label>
+        <label class="check"><input type="checkbox" [formField]="settingsForm.withLogo" /> {{ t.logo }}</label>
+        <label>{{ t.opacity }} {{ settings().opacity }} <input type="range" step="0.01" [formField]="settingsForm.opacity" /></label>
+        <label>{{ t.angle }} {{ settings().angle }}° <input type="range" step="1" [formField]="settingsForm.angle" /></label>
+        <label
+          >{{ t.layout }}
+          <select [formField]="settingsForm.layout">
+            <option value="tile">{{ t.tiled }}</option>
+            <option value="center">{{ t.centered }}</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" [formField]="settingsForm.protect" /> {{ t.protect }}</label>
+      </section>
+
+      <section>
+        <h4>{{ t.output }}</h4>
+        <label class="check"><input type="checkbox" [formField]="settingsForm.allowDownload" /> {{ t.allowDownload }}</label>
+        <label class="check"><input type="checkbox" [formField]="settingsForm.allowPdfDownload" /> {{ t.allowPdfDownload }}</label>
+        <label class="check"><input type="checkbox" [formField]="settingsForm.allowPrint" /> {{ t.allowPrint }}</label>
+      </section>
+
+      <section>
+        <h4>{{ t.events }}</h4>
+        <ol class="log" data-testid="log">
+          @for (line of log(); track $index) {
+            <li>{{ line }}</li>
+          }
+        </ol>
+      </section>
+    </aside>
+
+    <main class="stage">
+      <sy-doc-viewer
+        [src]="src()"
+        [fileName]="fileName()"
+        [watermark]="watermark()"
+        [watermarkContext]="context()"
+        [protect]="settings().protect"
+        [allowDownload]="settings().allowDownload"
+        [allowPdfDownload]="settings().allowPdfDownload"
+        [allowPrint]="settings().allowPrint"
+        (loaded)="onLoaded($event)"
+        (viewerError)="onError($event)"
+        (tamper)="onTamper($event)"
+      />
+    </main>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>© {{ year }} Swipergy GmbH. {{ t.license }}</span>
+  <nav>
+    <a href="https://www.swipergy.com/impressum/" target="_blank" rel="noopener">{{ t.legalNotice }}</a>
+    <a href="https://www.swipergy.com/datenschutz/" target="_blank" rel="noopener">{{ t.privacy }}</a>
+  </nav>
+</footer>
